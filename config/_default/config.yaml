@@ -6,7 +6,7 @@ theme: "starter-hugo-academic"
 
 title: John You # Website name
 baseurl: 'https://john-you.netlify.app/' # Website URL
-copyright: '© 2021 John You' # Footer text, e.g. '© {year} Me'
+copyright: '© {year} John You' # Footer text, e.g. '© {year} Me'
 
 ############################
 ## LANGUAGE
