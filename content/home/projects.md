@@ -6,8 +6,10 @@ widget: portfolio
 # This file represents a page section.
 headless: true
 
+active: false
+
 # Order that this section appears on the page.
-weight: 65
+weight: 30
 
 title: Projects
 subtitle: ''
@@ -41,7 +43,7 @@ design:
   #   2 = Compact
   #   3 = Card
   #   5 = Showcase
-  view: 3
+  view: 5
 
   # For Showcase view, flip alternate rows?
   flip_alt_rows: false

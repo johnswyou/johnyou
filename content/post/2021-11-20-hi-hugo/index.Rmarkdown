@@ -1,5 +1,5 @@
 ---
-title: Hi Hugo
+title: Test Post
 author: ''
 date: '2021-11-20'
 slug: hi-hugo
@@ -17,20 +17,20 @@ image:
 projects: []
 ---
 
-Hello Hugo!
+This is a first test post to test functionality of this site.
 
-```{r}
-summary(Orange)
+```{r, echo=FALSE, message=FALSE, warning=FALSE}
+library(knitr)
+head(Orange)
 ```
 
-```{r echo=FALSE}
+```{r, echo=FALSE, message=FALSE, warning=FALSE}
 library(ggplot2)
 oplot <- ggplot(Orange, aes(x = age, 
                    y = circumference, 
                    colour = Tree)) +
   geom_point() +
   geom_line() +
-  guides(colour = FALSE) +
   theme_bw()
 oplot
 ```

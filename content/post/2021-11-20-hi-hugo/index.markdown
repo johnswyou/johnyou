@@ -1,5 +1,5 @@
 ---
-title: Hi Hugo
+title: Test Post
 author: ''
 date: '2021-11-20'
 slug: hi-hugo
@@ -17,27 +17,17 @@ image:
 projects: []
 ---
 
-Hello Hugo!
-
-
-```r
-summary(Orange)
-```
-
-```
-##  Tree       age         circumference  
-##  3:7   Min.   : 118.0   Min.   : 30.0  
-##  1:7   1st Qu.: 484.0   1st Qu.: 65.5  
-##  5:7   Median :1004.0   Median :115.0  
-##  2:7   Mean   : 922.1   Mean   :115.9  
-##  4:7   3rd Qu.:1372.0   3rd Qu.:161.5  
-##        Max.   :1582.0   Max.   :214.0
-```
+This is a first test post to test functionality of this site.
 
 
 ```
-## Warning: `guides(<scale> = FALSE)` is deprecated. Please use `guides(<scale> =
-## "none")` instead.
+##   Tree  age circumference
+## 1    1  118            30
+## 2    1  484            58
+## 3    1  664            87
+## 4    1 1004           115
+## 5    1 1231           120
+## 6    1 1372           142
 ```
 
 <img src="{{< blogdown/postref >}}index_files/figure-html/unnamed-chunk-2-1.png" width="672" />
