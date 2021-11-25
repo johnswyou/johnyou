@@ -19,8 +19,7 @@ projects: []
 
 This is a first test post to test functionality of this site.
 
-```{r, echo=FALSE, message=FALSE, warning=FALSE}
-library(knitr)
+```{r echo=FALSE, message=FALSE, warning=FALSE}
 head(Orange)
 ```
 
@@ -31,6 +30,10 @@ oplot <- ggplot(Orange, aes(x = age,
                    colour = Tree)) +
   geom_point() +
   geom_line() +
+  # theme(panel.background = element_rect(fill='#EAE7D6'),
+  #       plot.background = element_rect(fill='#EAE7D6'),
+  #       legend.background = element_rect(fill = "#EAE7D6"), 
+  #       legend.key = element_rect(fill = "#EAE7D6", colour = "#EAE7D6"))
   theme_bw()
 oplot
 ```

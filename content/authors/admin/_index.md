@@ -41,10 +41,11 @@ social:
 - icon: linkedin
   icon_pack: fab
   link: https://www.linkedin.com/in/johnyou
+- icon: cv
+  icon_pack: ai
+  link: uploads/resume.pdf
 superuser: true
-title: John You
+title:
 ---
 
 I am a first year masters student at the University of Waterloo's Civil and Environmental Engineering department under the supervision of professor John Quilty. My research is in the area of hydrological forecasting, with a focus on automatic hyperparameter selection of machine learning models using metaheuristic optimization methods such as Bayesian optimization and hyperband optimization. A large part of my work revolves around building on a new hydrological forecasting framework originally conceived by professor John Quilty. Aside from my forecasting interests, I enjoy talking about ideas, spending time with family and friends, and experiencing new sights and smells.
-
-{{< icon name="download" pack="fas" >}} Download my {{< staticref "uploads/resume.pdf" "newtab" >}}CV{{< /staticref >}}.

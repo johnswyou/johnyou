@@ -5,8 +5,8 @@
 
 # Appearance
 
-theme: minimal
-day_night: true
+theme: 1950s
+day_night: false
 font: ''
 font_size: L
 
@@ -100,7 +100,7 @@ show_related:
 reading_time: true
 section_pager: false
 docs_section_pager: true
-sharing: true
+sharing: false
 copyright_license:
   enable: false
   allow_derivatives: false
@@ -157,4 +157,4 @@ cms:
   local_backend: false
 icon:
   pack:
-    ai: false
+    ai: true
