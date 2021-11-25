@@ -20,7 +20,11 @@ projects: []
 This is a first test post to test functionality of this site.
 
 ```{r echo=FALSE, message=FALSE, warning=FALSE}
-head(Orange)
+# knitr::opts_chunk$set(cache = TRUE, warning = FALSE, message = FALSE, 
+#                       echo = TRUE, dpi = 300, cache.lazy = FALSE,
+#                       tidy = "styler", fig.width = 8, fig.height = 5)
+
+tibble::as_tibble(Orange)
 ```
 
 ```{r, echo=FALSE, message=FALSE, warning=FALSE}
