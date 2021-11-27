@@ -6,6 +6,6 @@ google_fonts = "family=Cutive+Mono&family=Lora:wght@400;700&family=Roboto:wght@4
 
 # Font families
 heading_font = "Lora"
-body_font = "Roboto"
+body_font = "Lora"
 nav_font = "Lora"
 mono_font = "Cutive Mono"

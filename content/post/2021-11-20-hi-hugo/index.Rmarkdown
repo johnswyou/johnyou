@@ -1,14 +1,14 @@
 ---
-title: Test Post
+title: Exploring Montreal's Urban Water Demand
 author: ''
-date: '2021-11-20'
+date: '2021-11-26'
 slug: hi-hugo
 categories: []
 tags: []
 subtitle: ''
 summary: ''
 authors: []
-lastmod: '2021-11-20T12:47:20-05:00'
+lastmod: '2021-11-26T12:47:20-05:00'
 featured: no
 image:
   caption: ''
@@ -17,27 +17,130 @@ image:
 projects: []
 ---
 
-This is a first test post to test functionality of this site.
+In this post, we will explore Montreal's urban water demand (UWD) between the end of February, 1999 and the end of August, 2010. In total, there are 4179 observations/records in our data set. The time scale of the data set is daily. Our data is stored as a `tsibble` called `montreal`.
+
+```{r, include=FALSE}
+# library(tsibble)
+# library(fable)
+# library(feasts)
+# library(tidyverse)
+# library(lubridate)
+library(fpp3)
+knitr::opts_chunk$set(warning = FALSE, message = FALSE)
+```
 
 ```{r echo=FALSE, message=FALSE, warning=FALSE}
-# knitr::opts_chunk$set(cache = TRUE, warning = FALSE, message = FALSE, 
-#                       echo = TRUE, dpi = 300, cache.lazy = FALSE,
-#                       tidy = "styler", fig.width = 8, fig.height = 5)
-
-tibble::as_tibble(Orange)
+load("Montreal_UWD.RData")
 ```
 
 ```{r, echo=FALSE, message=FALSE, warning=FALSE}
-library(ggplot2)
-oplot <- ggplot(Orange, aes(x = age, 
-                   y = circumference, 
-                   colour = Tree)) +
-  geom_point() +
-  geom_line() +
-  # theme(panel.background = element_rect(fill='#EAE7D6'),
-  #       plot.background = element_rect(fill='#EAE7D6'),
-  #       legend.background = element_rect(fill = "#EAE7D6"), 
-  #       legend.key = element_rect(fill = "#EAE7D6", colour = "#EAE7D6"))
-  theme_bw()
-oplot
+montreal <- dat_df %>% as_tsibble(index = Date)
 ```
+
+```{r}
+autoplot(montreal) +
+  ggtitle("Urban water demand for Montreal, Quebec, Canada")
+```
+
+Montreal's urban water demand exhibits strong seasonality on the monthly scale. Regardless of year, average monthly UWD rises and falls in a predictable fashion. This may be observed in the following 2 plots.
+
+```{r}
+montreal %>%
+  gg_season(UWD, labels = "none", period = "year") +
+  # theme(legend.position = "none") +
+  labs(y = "UWD (Mega-Litres)",
+       title = "Seasonal Plot: Montreal Urban Water Demand")
+```
+
+```{r}
+montreal %>% 
+  mutate(Month = yearmonth(Date)) %>% 
+  index_by(Month) %>% 
+  summarise(UWD_month = mean(UWD)) %>% 
+  gg_subseries(UWD_month, period = "year") +
+  labs(
+    y = "UWD (Mega-Litres)",
+    title = "Montreal Urban Water Demand"
+  )
+```
+
+In addition to seasonal effects, there seems to be a slight decrease in Montreal's water demand on weekends. The following plot shows this.
+
+```{r}
+montreal %>% gg_subseries(UWD, period = "week") +
+  labs(
+    y = "UWD (Mega-Litres)",
+    title = "Montreal Urban Water Demand"
+  )
+```
+
+Let's take a look at correlations between input features and UWD. Our data set `montreal` has 3 input features: `Tmax`, `R` and `API95`. `Tmax` is maximum daily air temperature, `R` is total daily rainfall, and `API95` is the daily antecedent precipitation index. [Click here](https://tonyladson.wordpress.com/tag/antecedent-precipitation-index/) to learn more about this feature.
+
+```{r}
+montreal %>%
+  GGally::ggpairs(columns = 2:5, lower = list(continuous = GGally::wrap('points', alpha = 0.2)))
+```
+
+it is evident that maximum daily temperature has a significant positive correlation with UWD. Let's zoom in on the scatter plot between maximum daily temperature and UWD:
+
+```{r}
+montreal %>%
+  ggplot(aes(x = Tmax, y = UWD)) +
+  geom_point(alpha = 0.3) +
+  labs(x = "Maximum Temperature (degrees Celsius)",
+       y = "Urban Water Demand (ML)",
+       title = "Scatterplot of Maximum Daily Temperature and UWD")
+```
+
+it appears that there is a nonlinear relationship between maximum daily temperature and UWD.
+
+We can also look at auto-correlations by plotting UWD against different lagged versions of itself:
+
+```{r}
+montreal %>%
+  gg_lag(UWD, geom = "point", lags = 1) +
+  labs(x = "lag(UWD, 1)")
+```
+
+the plot above shows that if yesterday's UWD was high, then today's UWD will probably be high too. We can see powerful correlations for longer lags as well:
+
+```{r}
+montreal %>%
+  gg_lag(UWD, geom = "point") +
+  labs(x = "lag(UWD, k)")
+```
+
+We even see autocorrelation at the monthly scale:
+
+```{r}
+montreal %>%
+  mutate(Month = yearmonth(Date)) %>%
+  index_by(Month) %>%
+  summarise(UWD = mean(UWD)) %>%
+  gg_lag(UWD, geom = "point") +
+  labs(x = "lag(UWD, k)")
+```
+
+Note that ACF plots give the same information as the lagged scatter plots above. For instance, at the daily scale, the ACF plot for UWD looks as follows:
+
+```{r}
+montreal %>%
+  ACF(UWD, lag_max = 48) %>%
+  autoplot() +
+  labs(title="Montreal UWD ACF Plot")
+```
+
+Lastly, it appears that Montreal's UWD has been trending down over the years, which could be caused (in part) by newer toilets, appliances and other water consuming items replacing older, more water intensive products. This applies to both residential and industrial settings.
+
+```{r}
+montreal %>% 
+  mutate(Month = yearmonth(Date)) %>% 
+  index_by(Month) %>% 
+  summarise(UWD_month = mean(UWD)) %>% 
+  model(
+    STL(UWD_month ~ trend() + season(), robust = TRUE)
+    ) %>%
+  components() %>%
+  autoplot()
+```
+
