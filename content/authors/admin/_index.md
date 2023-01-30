@@ -48,4 +48,4 @@ superuser: true
 title:
 ---
 
-I am a first year masters student at the University of Waterloo's Civil and Environmental Engineering department under the supervision of professor John Quilty. My research is in the area of hydrological forecasting, with a focus on automatic hyperparameter selection of machine learning models using metaheuristic optimization methods such as Bayesian optimization and hyperband optimization. A large part of my work revolves around building on a new hydrological forecasting framework originally conceived by professor John Quilty. Aside from my forecasting interests, I enjoy talking about ideas, spending time with family and friends, and experiencing new sights and smells.
+I am a masters student at the University of Waterloo's Civil and Environmental Engineering department under the supervision of professor John Quilty. My research analyzes the joint usage of wavelet decomposition and machine learning for stream flow forecasting of snow-melt driven basins across Canada. I love meeting new people and learning about everything, feel free to message me!
